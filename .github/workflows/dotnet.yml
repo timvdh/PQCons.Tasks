@@ -26,5 +26,11 @@ jobs:
       run: dotnet build ./src/PQCons.Tasks/PQCons.Tasks.csproj --no-restore
     - name: Restore dependencies for test
       run: dotnet restore ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj
+    - name: List test output directory
+      run: ls -la ./test/PQCons.Tasks.Test/bin/Debug/net8.0/
     - name: Test
-      run: dotnet test ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj --no-build --verbosity detailed
+      run: dotnet test ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj --no-build --logger "trx;LogFileName=TestResults.trx" --results-directory "./test-results"
+    - name: Run VSTest
+      run: |
+        dotnet build ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj --configuration Debug
+        dotnet vstest ./test/PQCons.Tasks.Test/bin/Debug/net8.0/PQCons.Tasks.Test.dll --logger:trx --ResultsDirectory:./test-results
