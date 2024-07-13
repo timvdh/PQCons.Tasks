@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\scr\PQCons.Tasks\PQCons.Tasks.csproj" />
+    <ProjectReference Include="..\..\src\PQCons.Tasks\PQCons.Tasks.csproj" />
   </ItemGroup>
 
   <ItemGroup>
