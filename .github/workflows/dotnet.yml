@@ -1,4 +1,4 @@
-# This workflow will build a .NET project
+# This workflow will build a .NET project and publish to NuGet
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: .NET
@@ -10,28 +10,46 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
     - name: Restore dependencies for build
       run: dotnet restore ./src/PQCons.Tasks/PQCons.Tasks.csproj
+    
     - name: Build
       run: dotnet build ./src/PQCons.Tasks/PQCons.Tasks.csproj --no-restore
+
     - name: Restore dependencies for test
       run: dotnet restore ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj
+
     - name: Build Test Project
       run: dotnet build ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj --configuration Debug
+
     - name: List test output directory
       run: ls -la ./test/PQCons.Tasks.Test/bin/Debug/net8.0/
+
     - name: Test
       run: dotnet test ./test/PQCons.Tasks.Test/PQCons.Tasks.Test.csproj --no-build --logger "trx;LogFileName=TestResults.trx" --results-directory "./test-results"
+
     - name: Run VSTest
+      run: dotnet vstest ./test/PQCons.Tasks.Test/bin/Debug/net8.0/PQCons.Tasks.Test.dll --logger:trx --ResultsDirectory:./test-results
+
+    - name: Setup NuGet.exe
+      uses: NuGet/setup-nuget@v2.0.0
+      with:
+        nuget-version: latest
+        nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+        nuget-api-key-source: https://api.nuget.org/v3/index.json
+
+    - name: Pack and Push to NuGet
       run: |
-        dotnet vstest ./test/PQCons.Tasks.Test/bin/Debug/net8.0/PQCons.Tasks.Test.dll --logger:trx --ResultsDirectory:./test-results
+        dotnet pack ./src/PQCons.Tasks/PQCons.Tasks.csproj -c Release -o ./nupkg
+        dotnet nuget push ./nupkg/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
