@@ -47,5 +47,3 @@ jobs:
       run: |
         dotnet pack ./src/PQCons.Tasks/PQCons.Tasks.csproj -c Release -o ./nupkg
         dotnet nuget push ./nupkg/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/timvdh/index.json
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
