@@ -40,6 +40,8 @@ jobs:
       uses: NuGet/setup-nuget@v2.0.0
       with:
         nuget-version: latest
+        nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+        nuget-api-key-source: https://api.nuget.org/v3/index.json
 
     - name: Pack and Push to GitHub Packages
       run: |
