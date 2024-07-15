@@ -8,7 +8,7 @@
 		<PackageId>PQCons.Tasks</PackageId>
 		<Version>1.0.3</Version>
 		<Authors>pq consulting - Tim van der Horst</Authors>
-		<Description>A description of your package</Description>
+		<Description>Utilities for .NET Task Management</Description>
 		<PackageTags>task-management;utility;productivity;scheduling;tasks;workflow;dotnet;net8;tool;task-automation;task-tracking</PackageTags>
 		<RepositoryUrl>https://github.com/yourrepo</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
