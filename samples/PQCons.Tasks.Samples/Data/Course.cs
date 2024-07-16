@@ -1,4 +1,8 @@
-﻿namespace PQCons.Tasks.Samples.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace PQCons.Tasks.Samples.Data;
 
 internal record Course(string Id)
 {

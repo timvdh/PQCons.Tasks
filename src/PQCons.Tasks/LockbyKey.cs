@@ -1,32 +1,29 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace PQCons.Tasks;
-
-public class LockByKey<TKey> where TKey : IEquatable<TKey>
+namespace PQCons.Tasks
 {
-    public int LockCount => _locks.Count;
-    private readonly ConcurrentDictionary<TKey, SemaphoreSlim> _locks;
-
-    public LockByKey()
+    public class LockByKey<TKey> where TKey : IEquatable<TKey>
     {
-        _locks = new();
-    }
+        public int LockCount => _locks.Count;
+        private readonly ConcurrentDictionary<TKey, SemaphoreSlim> _locks;
 
-    public LockByKey(IEqualityComparer<TKey>? equalityComparer)
-    {
-        _locks = new(equalityComparer);
-    }
+        public LockByKey() => _locks = new ConcurrentDictionary<TKey, SemaphoreSlim>();
 
-    public async Task<IDisposable> AcquireLockAsync(TKey key)
-    {
-        return await GetReleaserAsync(key).ConfigureAwait(false);
-    }
+        public LockByKey(IEqualityComparer<TKey> equalityComparer)
+            => _locks = new ConcurrentDictionary<TKey, SemaphoreSlim>(equalityComparer);
 
-    private async Task<IDisposable> GetReleaserAsync(TKey key)
-    {
-        var semaphore = _locks.GetOrAdd(key, _ => new SemaphoreSlim(1, 1));
-        await semaphore.WaitAsync().ConfigureAwait(false);
+        public async Task<IDisposable> AcquireLockAsync(TKey key)
+            => await GetReleaserAsync(key).ConfigureAwait(false);
 
-        return new LockByKeyReleaser<TKey>(key, semaphore, _locks);
+        private async Task<IDisposable> GetReleaserAsync(TKey key)
+        {
+            var semaphore = _locks.GetOrAdd(key, _ => new SemaphoreSlim(1, 1));
+            await semaphore.WaitAsync().ConfigureAwait(false);
+            return new LockByKeyReleaser<TKey>(key, semaphore, _locks);
+        }
     }
 }
