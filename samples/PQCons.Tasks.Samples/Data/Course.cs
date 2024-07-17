@@ -9,7 +9,7 @@ internal record Course(string Id)
 
     public async Task AssignStudent(Student student)
     {
-        // this is the critical section that LockByKey must prevent
+        // this is the critical section that LockByKey must serialize per key
         if (Seats > 0)
         {
             // some work, e.g. a webservice call reserving a seat
