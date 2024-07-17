@@ -5,10 +5,10 @@ on:
   workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   push:
     branches:
-      - 'main'       # Run the workflow when pushing to the main branch
+      - 'main'       # Run the workflow only when pushing to the main branch
   pull_request:
     branches:
-      - '*'          # Run the workflow for all pull requests
+      - 'main'          # Run the workflow for pull requests targeting the main branch
   release:
     types:
       - published    # Run the workflow when a new GitHub release is published
@@ -17,7 +17,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace }}/nuget
-  SourcePath: ${{ github.workspace }}/src/PQCons.Tasks/PQCons.Tasks.csproj"  # Specify the path of the source project
+  SourcePath: ${{ github.workspace }}/src/PQCons.Tasks/PQCons.Tasks.csproj  # Specify the path of the source project file
 
 defaults:
   run:
@@ -34,6 +34,8 @@ jobs:
     # Install the .NET SDK indicated in the global.json file
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '5.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
     - name: Create NuGet package
@@ -54,6 +56,8 @@ jobs:
       # Install the .NET SDK indicated in the global.json file
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '5.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
 
       # Download the NuGet package created in the previous job
       - uses: actions/download-artifact@v3
@@ -77,6 +81,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '5.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
     - name: Run tests
       run: dotnet test ${{ env.SourcePath }} --configuration Release
 
@@ -97,6 +103,8 @@ jobs:
       # Install the .NET SDK indicated in the global.json file
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '5.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
 
       # Publish all NuGet packages to NuGet.org
       # Use --skip-duplicate to prevent errors if a package with the same version already exists.

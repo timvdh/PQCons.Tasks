@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace PQCons.Tasks.Samples.Data;
+﻿namespace PQCons.Tasks.Samples.Data;
 
 internal record Course(string Id)
 {
@@ -13,7 +9,7 @@ internal record Course(string Id)
 
     public async Task AssignStudent(Student student)
     {
-        // this is the critical section that LockByKey must prevent
+        // this is the critical section that LockByKey must serialize per key
         if (Seats > 0)
         {
             // some work, e.g. a webservice call reserving a seat

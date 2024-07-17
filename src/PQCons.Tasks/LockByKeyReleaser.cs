@@ -10,7 +10,7 @@ namespace PQCons.Tasks
         private readonly TKey _key;
         private readonly ConcurrentDictionary<TKey, SemaphoreSlim> _locks;
 
-        public LockByKeyReleaser(TKey key, SemaphoreSlim semaphore,
+        internal LockByKeyReleaser(TKey key, SemaphoreSlim semaphore,
             ConcurrentDictionary<TKey, SemaphoreSlim> locks)
         {
             _semaphore = semaphore;
@@ -18,6 +18,9 @@ namespace PQCons.Tasks
             _locks = locks;
         }
 
+        /// <summary>
+        /// Release the semaphore and remove the lock dictionary entry on dispose
+        /// </summary>
         public void Dispose()
         {
             _semaphore.Release();

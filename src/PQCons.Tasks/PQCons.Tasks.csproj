@@ -1,8 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>.netstandard20</TargetFramework>
-
+		<Optimize>true</Optimize>
+		<DebugSymbols>true</DebugSymbols>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	
 		<!-- NuGet package properties -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<EnablePackageValidation>true</EnablePackageValidation>
 		<PackageId>PQCons.Tasks</PackageId>
 		<Version>1.0.4</Version>
@@ -11,6 +17,21 @@
 		<Description>Utilities for .NET Task Management</Description>
 		<PackageTags>task-management;utility;productivity;scheduling;tasks;workflow;dotnet;net8;tool;task-automation;task-tracking</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageOutputPath>$(SolutionDir)\nuget\</PackageOutputPath>
 		<RepositoryUrl>https://github.com/timvdh/PQCons.Tasks</RepositoryUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/timvdh/PQCons.Tasks</PackageProjectUrl>
 	</PropertyGroup>
+
+	<PropertyGroup>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile>
+			bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml
+		</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+		<None Include="..\..\images\icon.png" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 </Project>
