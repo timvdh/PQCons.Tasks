@@ -41,7 +41,7 @@ jobs:
     - name: Restore dependencies and install SourceLink
       run: |
         dotnet restore ${{ env.SourcePath }}
-        dotnet add package Microsoft.SourceLink.GitHub
+        dotnet add ${{ env.SourcePath }} package Microsoft.SourceLink.GitHub
 
     # Build the project
     - name: Build the project
