@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>.netstandard20</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<Optimize>true</Optimize>
 		<DebugSymbols>true</DebugSymbols>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-	
+
 		<!-- NuGet package properties -->
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -25,9 +25,7 @@
 
 	<PropertyGroup>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<DocumentationFile>
-			bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml
-		</DocumentationFile>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
