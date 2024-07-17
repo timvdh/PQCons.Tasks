@@ -27,7 +27,7 @@ jobs:
   create_nuget:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
 
@@ -52,7 +52,7 @@ jobs:
       run: dotnet pack ${{ env.SourcePath }} --configuration Release --include-symbols --include-source --output ${{ env.NuGetDirectory }}
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: nuget
         if-no-files-found: error
@@ -60,7 +60,7 @@ jobs:
         path: ${{ env.NuGetDirectory }}/*.nupkg
 
     # Publish the symbol package as an artifact
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: symbols
         if-no-files-found: error
@@ -78,11 +78,11 @@ jobs:
           dotnet-version: '5.0.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
 
       # Download the NuGet package and symbol package created in the previous job
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: nuget
           path: ${{ env.NuGetDirectory }}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: symbols
           path: ${{ env.NuGetDirectory }}
@@ -100,7 +100,7 @@ jobs:
   run_test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -117,11 +117,11 @@ jobs:
     needs: [ validate_nuget, run_test ]
     steps:
       # Download the NuGet package and symbol package created in the previous job
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: nuget
           path: ${{ env.NuGetDirectory }}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: symbols
           path: ${{ env.NuGetDirectory }}
