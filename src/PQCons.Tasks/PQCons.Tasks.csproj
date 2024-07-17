@@ -17,7 +17,7 @@
 		<Description>Utilities for .NET Task Management</Description>
 		<PackageTags>task-management;utility;productivity;scheduling;tasks;workflow;dotnet;net8;tool;task-automation;task-tracking</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageOutputPath>$(SolutionDir)\nuget\</PackageOutputPath>
+		<PackageOutputPath>$(OutputPath)\nuget\</PackageOutputPath>
 		<RepositoryUrl>https://github.com/timvdh/PQCons.Tasks</RepositoryUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageProjectUrl>https://github.com/timvdh/PQCons.Tasks</PackageProjectUrl>
