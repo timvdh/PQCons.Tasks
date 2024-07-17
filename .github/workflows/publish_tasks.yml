@@ -37,6 +37,10 @@ jobs:
       with:
         dotnet-version: '5.0.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
 
+    # Build the project
+    - name: Build the project
+      run: dotnet build ${{ env.SourcePath }} --configuration Release
+
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
     - name: Create NuGet package
       run: dotnet pack ${{ env.SourcePath }} --configuration Release --output ${{ env.NuGetDirectory }}
