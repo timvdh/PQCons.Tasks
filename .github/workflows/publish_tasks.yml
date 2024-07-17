@@ -37,6 +37,12 @@ jobs:
       with:
         dotnet-version: '5.0.x' # Ensure a compatible .NET SDK version that supports .NET Standard 2.0
 
+    # Restore dependencies and install SourceLink
+    - name: Restore dependencies and install SourceLink
+      run: |
+        dotnet restore ${{ env.SourcePath }}
+        dotnet add package Microsoft.SourceLink.GitHub
+
     # Build the project
     - name: Build the project
       run: dotnet build ${{ env.SourcePath }} --configuration Release
@@ -137,4 +143,5 @@ jobs:
       - name: Publish Symbol package
         run: |
           foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.snupkg)) {
-              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }

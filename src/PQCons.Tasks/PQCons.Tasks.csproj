@@ -3,6 +3,10 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Optimize>true</Optimize>
 		<DebugSymbols>true</DebugSymbols>
+		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<EmbedAllSources>true</EmbedAllSources>
+		<SourceLinkCreate>true</SourceLinkCreate>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 
 		<!-- NuGet package properties -->
