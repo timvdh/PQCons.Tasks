@@ -15,7 +15,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<EnablePackageValidation>true</EnablePackageValidation>
 		<PackageId>PQCons.Tasks</PackageId>
-		<Version>1.0.5</Version>
+		<Version>1.1.0</Version>
 		<Authors>Tim van der Horst</Authors>
 		<Company>pq consulting</Company>
 		<Description>Utilities for .NET Task Management</Description>
