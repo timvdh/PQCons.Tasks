@@ -4,6 +4,10 @@ using System.Threading;
 
 namespace PQCons.Tasks
 {
+    /// <summary>
+    /// Releases the lock and removes disposable resources.
+    /// </summary>
+    /// <typeparam name="TKey">type of the key that is used for locking</typeparam>
     internal class LockByKeyReleaser<TKey> : IDisposable where TKey : IEquatable<TKey>
     {
         private readonly SemaphoreSlim _semaphore;
@@ -19,7 +23,7 @@ namespace PQCons.Tasks
         }
 
         /// <summary>
-        /// Release the semaphore and remove the lock dictionary entry on dispose
+        /// Release the semaphore and remove the lock dictionary entry on dispose.
         /// </summary>
         public void Dispose()
         {

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace PQCons.Tasks
 {
     /// <summary>
-    /// 
+    /// Keyed locking of tasks.
     /// </summary>
-    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TKey">type of the key that is used for locking</typeparam>
     public class LockByKey<TKey> where TKey : IEquatable<TKey>
     {
         /// <summary>
