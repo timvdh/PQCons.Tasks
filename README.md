@@ -15,9 +15,12 @@ Features:
 ### Basic Usage
 
 ```csharp
-using (await sut.AcquireLockAsync("key"))
+using PQCons.Tasks;
+
+var lockByKey = new LockByKey<string>();
+using (await lockByKey.AcquireLockAsync("key"))
 {
-    // this is the critical section to be locked by "key".
+    // add your critical section here
 }
 ```
 
